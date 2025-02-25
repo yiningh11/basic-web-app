@@ -15,6 +15,19 @@ export default function QueryProcessor(query: string): string {
     return "rohan20";
   }
   
+  const additionMatch = query.match(/what is (\d+) plus (\d+)\?/i);
+  if (additionMatch) {
+    const num1 = parseInt(additionMatch[1], 10);
+    const num2 = parseInt(additionMatch[2], 10);
+    return (num1 + num2).toString();
+  }
+
+  const largestMatch = query.match(/which of the following numbers is the largest: ([\d, ]+)\?/i);
+  if (largestMatch) {
+    const numbers = largestMatch[1].split(',').map(num => parseInt(num.trim(), 10));
+    return Math.max(...numbers).toString();
+  }
+  
 
   return "";
 }
