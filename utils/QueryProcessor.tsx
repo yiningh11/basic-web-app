@@ -15,11 +15,12 @@ export default function QueryProcessor(query: string): string {
     return "rohan20";
   }
 
-  const additionMatch = query.match(/what is (\d+) plus (\d+)\?/i);
+  const additionMatch = query.match(/what is (\d+) plus (\d+)(?: plus (\d+))?\?/i);
   if (additionMatch) {
     const num1 = parseInt(additionMatch[1], 10);
     const num2 = parseInt(additionMatch[2], 10);
-    return (num1 + num2).toString();
+    const num3 = additionMatch[3] ? parseInt(additionMatch[3], 10) : 0;
+    return (num1 + num2 + num3).toString();
   }
 
   const subtractionMatch = query.match(/what is (\d+) minus (\d+)\?/i);
@@ -34,6 +35,13 @@ export default function QueryProcessor(query: string): string {
     const num1 = parseInt(multiplicationMatch[1], 10);
     const num2 = parseInt(multiplicationMatch[2], 10);
     return (num1 * num2).toString();
+  }
+
+  const powerMatch = query.match(/what is (\d+) to the power of (\d+)\?/i);
+  if (powerMatch) {
+    const base = parseInt(powerMatch[1], 10);
+    const exponent = parseInt(powerMatch[2], 10);
+    return Math.pow(base, exponent).toString();
   }
 
   const largestMatch = query.match(/which of the following numbers is the largest: ([\d, ]+)\?/i);
